@@ -24,7 +24,9 @@ def main():
             break
         elif k == ord('s'):
             cv2.imwrite(f"./test_image/{n_data}.jpg", frame)
-        elif k == ord('k'):
+        elif k == ord('r'):
+            effect_type = None
+        elif k == ord('p'):
             effect_type = 'pumpkin'
 
 if __name__ == "__main__":
