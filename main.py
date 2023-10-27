@@ -20,7 +20,7 @@ def main():
         if k == ord('q') or not ret:
             break
         elif k == ord('s'):
-            cv2.imwrite(f"./test_image/{n_data}.jpg", frame)
+            cv2.imwrite(f"./test_image/{n_data}.jpg", effected)
             subprocess.run(["afplay", "./Sound/Camera-Film03-1.mp3"])  # Macでしか動かないよ^v^
         elif k == ord('r'):
             effect_controller.reset()
@@ -28,6 +28,8 @@ def main():
             effect_controller.set_effect("pumpkin")
         elif k == ord('t'):
             effect_controller.set_effect("thunder")
+        elif k == ord('w'):
+            print('pushing')
 
 if __name__ == "__main__":
     main()

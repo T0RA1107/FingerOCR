@@ -8,7 +8,11 @@ def thunder_capture():
 
 def thunder(frame, thunder_image):
     ret = copy.deepcopy(frame)
+    H, W, _ = frame.shape
     h, w, _ = thunder_image.shape
+    if H < h or W < w:
+        rate = min(h / H, w / W)
+        thunder_image = cv2.resize(thunder_image, fx=rate, fy=rate)
     mask = np.where(np.any(thunder_image > 50, axis=2))
     ret[:h, :w, :][mask[0], mask[1]] = thunder_image[mask[0], mask[1]]
     return ret
