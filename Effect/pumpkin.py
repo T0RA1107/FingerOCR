@@ -1,9 +1,10 @@
 import sys
 import cv2
 import numpy as np
+import copy
 
 def pumpkin(frame):
-    ret = frame.copy()
+    ret = copy.deepcopy(frame)
     pumpkin_image = cv2.imread("./Effect/effect_data/halloween_pumpkin1.png")
     h, w, _ = pumpkin_image.shape
     mask = np.where(np.any(pumpkin_image > 0, axis=2))

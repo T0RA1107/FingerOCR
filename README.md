@@ -1,7 +1,7 @@
 ## I班最終課題アイディア
 - 指文字認識
     - シール貼る(後回し)
-    - 画像は適当に処理して、hugging-faceのOCRに認識させ、Computer textに変換する
+    - 画像は適当に処理して、hugging-faceのOCR(https://huggingface.co/docs/transformers/model_doc/trocr)に認識させ、Computer textに変換する
     - 日本語だと大変そうなので一旦英語限定
     - 速さに応じて太さを変えたい
 - 顔認証とパスコード認証同時に
@@ -12,3 +12,4 @@
 - huggingfaceに依存してしまう
 - 顔認証はできる？
 - 量だいじょうぶ？
+- 文字列の判定はハミング距離などを用いて、ある程度の予測失敗をしても補えるようにする。

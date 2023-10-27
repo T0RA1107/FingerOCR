@@ -1,33 +1,33 @@
 import cv2
 import numpy as np
-from Effect.SampleEffect import Effect
-from Effect.pumpkin import pumpkin
+import glob
+import os
+import subprocess
+from Effect.EffectController import EffectController
 
-name2effect = {
-    'pumpkin': pumpkin
-}
+save_dir = "./test_image"
 
 def main():
     cap = cv2.VideoCapture(1)
-    effect_type = None
-    n_data = 0
+    effect_controller = EffectController()
+    n_data = len(glob.glob(os.path.join(save_dir, "[0-9]*.jpg")))
     while True:
         ret, frame = cap.read()
-        if effect_type is not None:
-            Effect = name2effect[effect_type]
-            effected = Effect(frame)
-            cv2.imshow('camera', effected)
-        else:
-            cv2.imshow('camera', frame)
+        frame = frame[:, ::-1, :]
+        effected = effect_controller.effect(frame)
+        cv2.imshow('camera', effected)
         k = cv2.waitKey(1)
-        if k == ord('q'):
+        if k == ord('q') or not ret:
             break
         elif k == ord('s'):
             cv2.imwrite(f"./test_image/{n_data}.jpg", frame)
+            subprocess.run(["afplay", "./Sound/Camera-Film03-1.mp3"])  # Macでしか動かないよ^v^
         elif k == ord('r'):
-            effect_type = None
+            effect_controller.reset()
         elif k == ord('p'):
-            effect_type = 'pumpkin'
+            effect_controller.set_effect("pumpkin")
+        elif k == ord('t'):
+            effect_controller.set_effect("thunder")
 
 if __name__ == "__main__":
     main()
