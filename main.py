@@ -3,6 +3,7 @@ import numpy as np
 import glob
 import os
 import subprocess
+from playsound import playsound
 from Effect.EffectController import EffectController
 
 save_dir = "./test_image"
@@ -21,7 +22,7 @@ def main():
             break
         elif k == ord('s'):
             cv2.imwrite(f"./test_image/{n_data}.jpg", effected)
-            subprocess.run(["afplay", "./Sound/Camera-Film03-1.mp3"])  # Macでしか動かないよ^v^
+            playsound("./Sound/Camera-Film03-1.mp3")
         elif k == ord('r'):
             effect_controller.reset()
         elif k == ord('p'):
