@@ -1,14 +1,16 @@
 import cv2
 import numpy as np
+import threading
+from playsound import playsound
 import sys
 sys.path.append("./Effect")
 from pumpkin import pumpkin
-from thunder import thunder, thunder_capture
+from thunder import thunder, thunder_capture, thunder_SE
 
 class EffectController:
     name2effect = {
         "pumpkin": { "call": pumpkin, "type": "sticker" },
-        "thunder": { "call": thunder, "type": "movie", "capture": thunder_capture }
+        "thunder": { "call": thunder, "type": "movie", "capture": thunder_capture, "SE": thunder_SE }
     }
 
     def __init__(self):
@@ -39,3 +41,5 @@ class EffectController:
         self.effect_name = effect_name
         if self.name2effect[effect_name]["type"] == "movie":
             self.effect_cap = self.name2effect[effect_name]["capture"]()
+            if "SE" in self.name2effect[effect_name]:
+                threading.Thread(target=playsound, args=(self.name2effect[effect_name]["SE"](),)).start()

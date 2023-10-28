@@ -6,6 +6,9 @@ import copy
 def thunder_capture():
     return cv2.VideoCapture("./Effect/effect_data/thunder_04.mp4")
 
+def thunder_SE():
+    return "./Sound/Thunder/天候・雷08.mp3"
+
 def thunder(frame, thunder_image):
     ret = copy.deepcopy(frame)
     H, W, _ = frame.shape
