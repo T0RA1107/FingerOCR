@@ -4,6 +4,7 @@ import glob
 import os
 import subprocess
 from playsound import playsound
+import threading
 from Effect.EffectController import EffectController
 
 save_dir = "./test_image"
@@ -22,7 +23,7 @@ def main():
             break
         elif k == ord('s'):
             cv2.imwrite(f"./test_image/{n_data}.jpg", effected)
-            playsound("./Sound/Camera-Film03-1.mp3")
+            threading.Thread(target=playsound, args=("./Sound/Camera/Camera-Film03-1.mp3",)).start()
         elif k == ord('r'):
             effect_controller.reset()
         elif k == ord('p'):
