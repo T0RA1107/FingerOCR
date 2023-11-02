@@ -25,7 +25,7 @@ class Thunder(EffectBase):
         return True, ret
 
 def thunder_capture():
-    return cv2.VideoCapture("./Effect/effect_data/thunder_04.mp4")
+    return cv2.VideoCapture("./Effect/effect_data/movie/thunder_04.mp4")
 
 def thunder_SE():
     return "./Sound/Thunder/天候・雷08.mp3"
@@ -44,7 +44,7 @@ def thunder(frame, thunder_image):
 if __name__ == "__main__":
     img_path = sys.argv[1]
     frame = cv2.imread(img_path)
-    cap = cv2.VideoCapture("./Effect/effect_data/thunder_04.mp4")
+    cap = cv2.VideoCapture("./Effect/effect_data/movie/thunder_04.mp4")
     while True:
         is_ok, thunder_image = cap.read()
         if not is_ok:

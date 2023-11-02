@@ -18,7 +18,7 @@ class Pumpkin(EffectBase):
 
 def pumpkin(frame):
     ret = copy.deepcopy(frame)
-    pumpkin_image = cv2.imread("./Effect/effect_data/halloween_pumpkin1.png")
+    pumpkin_image = cv2.imread("./Effect/effect_data/sticker/halloween_pumpkin1.png")
     h, w, _ = pumpkin_image.shape
     mask = np.where(np.any(pumpkin_image > 0, axis=2))
     ret[:h, :w, :][mask[0], mask[1]] = pumpkin_image[mask[0], mask[1]]
