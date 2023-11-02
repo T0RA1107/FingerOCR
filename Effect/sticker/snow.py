@@ -1,14 +1,20 @@
 import sys
 import cv2
 import numpy as np
+sys.path.append("./Effect")
+from effect_base import EffectBase
 
-def snow(frame):
-    snow_img = cv2.imread("./Effect/effect_data/sticker/snow.png")
-    h, w, _ = snow_img.shape
-    ret = copy.deepcopy(frame)
-    mask = np.where(np.any(snow_img > 0, axis=2))
-    ret[:h, :w, :][mask[0], mask[1]] = snow_img[mask[0], mask[1]]
-    return ret
+class Snow(EffectBase):
+    def __init__(self):
+        self.type = "sticker"
+
+    def __call__(self, frame):
+        ret = copy.deepcopy(frame)
+        snow_img = cv2.imread("./Effect/effect_data/sticker/snow.png")
+        h, w, _ = snow_img.shape
+        mask = np.where(np.any(snow_img > 0, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = snow_img[mask[0], mask[1]]
+        return True, ret
 
 if __name__ == "__main__":
     img_path = sys.argv[1]
@@ -21,3 +27,4 @@ if __name__ == "__main__":
             break
 
     cv2.destroyAllWindows()
+    

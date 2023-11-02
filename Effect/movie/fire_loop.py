@@ -2,20 +2,31 @@ import sys
 import cv2
 import numpy as np
 import copy
+sys.path.append("./Effect")
+from effect_base import EffectBase
+
+class Fire_loop(EffectBase):
+    def __init__(self):
+        self.type = "movie"
+        self.capture = cv2.VideoCapture("./Effect/effect_data/fire_loop_04.mp4")
+        self.SE = "./Sound/Thunder/天候・雷08.mp3"
+
+    def __call__(self, frame):
+        ret, image = self.capture.read()
+        if not ret:
+            return False, frame
+        ret = copy.deepcopy(frame)
+        H, W, _ = frame.shape
+        h, w, _ = image.shape
+        if H < h or W < w:
+            rate = min(h / H, w / W)
+            image = cv2.resize(image, fx=rate, fy=rate)
+        mask = np.where(np.any(image > 50, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = image[mask[0], mask[1]]
+        return True, ret
 
 def fire_loop_capture():
     return cv2.VideoCapture("./Effect/effect_data/movie/fire_loop_04.mp4")
-
-def fire_loop(frame, fire_loop_image):
-    ret = copy.deepcopy(frame)
-    H, W, _ = frame.shape
-    h, w, _ = fire_loop_image.shape
-    if H < h or W < w:
-        rate = min(h / H, w / W)
-        fire_loop_image = cv2.resize(fire_loop_image, fx=rate, fy=rate)
-    mask = np.where(np.any(fire_loop_image > 50, axis=2))
-    ret[:h, :w, :][mask[0], mask[1]] = fire_loop_image[mask[0], mask[1]]
-    return ret
 
 if __name__ == "__main__":
     img_path = sys.argv[1]
