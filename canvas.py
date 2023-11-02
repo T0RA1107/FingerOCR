@@ -5,7 +5,7 @@ class Canvas:
     def __init__(self, h, w):
         self.h = h
         self.w = w
-        self.canvas = np.zeros((self.h, self.w, 3))
+        self.canvas = np.zeros((self.h, self.w, 3), dtype=np.uint8)
         
     def write(self, frame):
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -35,7 +35,10 @@ class Canvas:
                 
                 cv2.circle(src, center=(xx, yy), radius=2, color=(0, 0, 255), thickness=5)
             
-        return src
+        self.canvas = src
     
     def reset(self):
-        self.canvas = np.zeros((self.h, self.w, 3))
+        self.canvas = np.zeros((self.h, self.w, 3), dtype=np.uint8)
+    
+    def show(self):
+        cv2.imshow("canvas", self.canvas)

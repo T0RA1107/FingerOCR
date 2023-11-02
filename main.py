@@ -6,12 +6,16 @@ import subprocess
 from playsound import playsound
 import threading
 from Effect.EffectController import EffectController
+from canvas import Canvas
 
 save_dir = "./test_image"
 
 def main():
     cap = cv2.VideoCapture(1)
     effect_controller = EffectController()
+    H = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    canvas = Canvas(H, W)
     n_data = len(glob.glob(os.path.join(save_dir, "[0-9]*.jpg")))
     while True:
         ret, frame = cap.read()
@@ -31,7 +35,8 @@ def main():
         elif k == ord('t'):
             effect_controller.set_effect("thunder")
         elif k == ord('w'):
-            print('pushing')
-
+            canvas.write(frame)
+        canvas.show()
+            
 if __name__ == "__main__":
     main()
