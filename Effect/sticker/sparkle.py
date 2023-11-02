@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import copy
 sys.path.append("./Effect")
 from effect_base import EffectBase
 
@@ -15,6 +16,14 @@ class Sparkle(EffectBase):
         mask = np.where(np.any(sparkle_img > 0, axis=2))
         ret[:h, :w, :][mask[0], mask[1]] = sparkle_img[mask[0], mask[1]]
         return True, ret
+
+def sparkle(frame):
+    ret = copy.deepcopy(frame)
+    sparkle_img = cv2.imread("./Effect/effect_data/sticker/sparkle.png")
+    h, w, _ = sparkle_img.shape
+    mask = np.where(np.any(sparkle_img > 0, axis=2))
+    ret[:h, :w, :][mask[0], mask[1]] = sparkle_img[mask[0], mask[1]]
+    return ret
 
 if __name__ == "__main__":
     img_path = sys.argv[1]

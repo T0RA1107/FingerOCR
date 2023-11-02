@@ -8,7 +8,8 @@ from effect_base import EffectBase
 class Rain(EffectBase):
     def __init__(self):
         self.type = "movie"
-        self.capture = cv2.VideoCapture("./Effect/effect_data/rain_01.mp4")
+        self.capture = cv2.VideoCapture("./Effect/effect_data/movie/rain_01.mp4")
+        
 
     def __call__(self, frame):
         ret, image = self.capture.read()
@@ -18,14 +19,15 @@ class Rain(EffectBase):
         H, W, _ = frame.shape
         h, w, _ = image.shape
         if H < h or W < w:
-            rate = min(h / H, w / W)
-            image = cv2.resize(image, fx=rate, fy=rate)
+            image = cv2.resize(image, dsize=(W, H))
         mask = np.where(np.any(image > 50, axis=2))
         ret[:h, :w, :][mask[0], mask[1]] = image[mask[0], mask[1]]
         return True, ret
 
 def rain_capture():
     return cv2.VideoCapture("./Effect/effect_data/movie/rain_01.mp4")
+
+
 
 if __name__ == "__main__":
     img_path = sys.argv[1]

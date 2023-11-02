@@ -17,6 +17,14 @@ class Fire(EffectBase):
         ret[:h, :w, :][mask[0], mask[1]] = fire_image[mask[0], mask[1]]
         return True, ret
 
+def fire(frame):
+    ret = copy.deepcopy(frame)
+    fire_image = cv2.imread("./Effect/effect_data/sticker/fire.png")
+    h, w, _ = fire_image.shape
+    mask = np.where(np.any(fire_image > 0, axis=2))
+    ret[:h, :w, :][mask[0], mask[1]] = fire_image[mask[0], mask[1]]
+    return ret
+
 if __name__ == "__main__":
     img_path = sys.argv[1]
     frame = cv2.imread(img_path)

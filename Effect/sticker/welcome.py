@@ -17,6 +17,14 @@ class Welcome(EffectBase):
         ret[:h, :w, :][mask[0], mask[1]] = welcome_image[mask[0], mask[1]]
         return True, ret
 
+def welcome(frame):
+    ret = copy.deepcopy(frame)
+    welcome_image = cv2.imread("./Effect/effect_data/sticker/welcome.png")
+    h, w, _ = welcome_image.shape
+    mask = np.where(np.any(welcome_image > 0, axis=2))
+    ret[:h, :w, :][mask[0], mask[1]] = welcome_image[mask[0], mask[1]]
+    return ret
+
 if __name__ == "__main__":
     img_path = sys.argv[1]
     frame = cv2.imread(img_path)

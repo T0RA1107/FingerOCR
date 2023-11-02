@@ -19,6 +19,7 @@ from sticker.thank_you import Thank_you
 from sticker.The_Nebuta_Festival import The_Nebuta_Festival
 from sticker.Tokyo_Metropolitan_Government import Tokyo_Metropolitan_Government
 from sticker.welcome import Welcome
+from sticker.chopper import Chopper
 
 from movie.thunder import Thunder
 from movie.confetti import Confetti
