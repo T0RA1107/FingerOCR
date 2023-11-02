@@ -2,20 +2,27 @@ import sys
 import cv2
 import numpy as np
 import copy
+sys.path.append("./Effect")
+from effect_base import EffectBase
 
-def roading_capture():
-    return cv2.VideoCapture("./Effect/effect_data/movie/roading_animation_white.mp4")
+class Roading(EffectBase):
+    def __init__(self):
+        self.type = "movie"
+        self.capture = cv2.VideoCapture("./Effect/effect_data/roading_animation_white.mp4")
 
-def roading(frame, roading_image):
-    ret = copy.deepcopy(frame)
-    H, W, _ = frame.shape
-    h, w, _ = roading_image.shape
-    if H < h or W < w:
-        rate = min(h / H, w / W)
-        roading_image = cv2.resize(roading_image, fx=rate, fy=rate)
-    mask = np.where(np.any(roading_image > 50, axis=2))
-    ret[:h, :w, :][mask[0], mask[1]] = roading_image[mask[0], mask[1]]
-    return ret
+    def __call__(self, frame):
+        ret, image = self.capture.read()
+        if not ret:
+            return False, frame
+        ret = copy.deepcopy(frame)
+        H, W, _ = frame.shape
+        h, w, _ = image.shape
+        if H < h or W < w:
+            rate = min(h / H, w / W)
+            image = cv2.resize(image, fx=rate, fy=rate)
+        mask = np.where(np.any(image > 50, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = image[mask[0], mask[1]]
+        return True, ret
 
 if __name__ == "__main__":
     img_path = sys.argv[1]

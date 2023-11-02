@@ -2,14 +2,20 @@ import sys
 import cv2
 import numpy as np
 import copy
+sys.path.append("./Effect")
+from effect_base import EffectBase
 
-def rainbow(frame):
-    ret = copy.deepcopy(frame)
-    rainbow_image = cv2.imread("./Effect/effect_data/sticker/rainbow.png")
-    h, w, _ = rainbow_image.shape
-    mask = np.where(np.any(rainbow_image > 0, axis=2))
-    ret[:h, :w, :][mask[0], mask[1]] = rainbow_image[mask[0], mask[1]]
-    return ret
+class Rainbow(EffectBase):
+    def __init__(self):
+        self.type = "sticker"
+
+    def __call__(self, frame):
+        ret = copy.deepcopy(frame)
+        rainbow_image = cv2.imread("./Effect/effect_data/sticker/rainbow.png")
+        h, w, _ = rainbow_image.shape
+        mask = np.where(np.any(rainbow_image > 0, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = rainbow_image[mask[0], mask[1]]
+        return True, ret
 
 if __name__ == "__main__":
     img_path = sys.argv[1]
@@ -22,3 +28,4 @@ if __name__ == "__main__":
             break
 
     cv2.destroyAllWindows()
+    

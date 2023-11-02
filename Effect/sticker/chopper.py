@@ -2,6 +2,8 @@ import sys
 import cv2
 import copy
 import numpy as np
+sys.path.append("./Effect")
+from effect_base import EffectBase
 
 def chopper(frame):
     ret = copy.deepcopy(frame)
@@ -13,3 +15,4 @@ def chopper(frame):
     ret[H//2-h//2:H//2+h//2, :w, :][mask[0], mask[1]] = chopper_image[mask[0], mask[1]]
     return ret
     
+
