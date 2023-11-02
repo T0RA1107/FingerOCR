@@ -12,8 +12,10 @@ class EffectController:
 
     def __init__(self):
         self.Effect = None
-        self.processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
-        self.model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
+        load = False
+        if load:
+            self.processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
+            self.model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
 
     def effect(self, frame):
         if self.Effect is None: return frame
@@ -29,7 +31,7 @@ class EffectController:
         assert effect_name in self.name2effect, f"effect \"{effect_name}\" does not exist"
         self.Effect = self.name2effect[effect_name]()  # インスタンス化
         if self.Effect.type == "movie":
-            if self.Effect.SE is not None:
+            if hasattr(self.Effect, "SE"):
                 threading.Thread(target=playsound, args=(self.Effect.SE,)).start()
 
     def _recognize(self, image):

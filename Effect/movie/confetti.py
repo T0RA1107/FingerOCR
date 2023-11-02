@@ -2,20 +2,29 @@ import sys
 import cv2
 import numpy as np
 import copy
+sys.path.append("./Effect")
+from effect_base import EffectBase
+
+class Confetti(EffectBase):
+    def __init__(self):
+        self.type = "movie"
+        self.capture = cv2.VideoCapture("./Effect/effect_data/confetti_02.mp4")
+
+    def __call__(self, frame):
+        ret, image = self.capture.read()
+        if not ret:
+            return False, frame
+        ret = copy.deepcopy(frame)
+        H, W, _ = frame.shape
+        h, w, _ = image.shape
+        if H < h or W < w:
+            image = cv2.resize(image, dsize=(W, H))
+        mask = np.where(np.any(image > 50, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = image[mask[0], mask[1]]
+        return True, ret
 
 def confetti_capture():
     return cv2.VideoCapture("./Effect/effect_data/movie/confetti_02.mp4")
-
-def confetti(frame, confetti_image):
-    ret = copy.deepcopy(frame)
-    H, W, _ = frame.shape
-    h, w, _ = confetti_image.shape
-    if H < h or W < w:
-        rate = min(h / H, w / W)
-        confetti_image = cv2.resize(confetti_image, fx=rate, fy=rate)
-    mask = np.where(np.any(confetti_image > 50, axis=2))
-    ret[:h, :w, :][mask[0], mask[1]] = confetti_image[mask[0], mask[1]]
-    return ret
 
 if __name__ == "__main__":
     img_path = sys.argv[1]

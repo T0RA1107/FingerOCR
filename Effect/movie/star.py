@@ -2,6 +2,32 @@ import sys
 import cv2
 import numpy as np
 import copy
+from effect_base import EffectBase
+
+class Star(EffectBase):
+    def __init__(self):
+        self.type = "movie"
+        self.capture = cv2.VideoCapture("./Effect/effect_data/star_03.mp4")
+        self.SE = "./Sound/Thunder/天候・雷08.mp3"
+
+    def __call__(self, frame):
+        ret, image = self.capture.read()
+        if not ret:
+            return False, frame
+        ret = copy.deepcopy(frame)
+        H, W, _ = frame.shape
+        h, w, _ = image.shape
+        if H < h or W < w:
+            image = cv2.resize(image, dsize=(W, H))
+        mask = np.where(np.any(image > 50, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = image[mask[0], mask[1]]
+        return True, ret
+
+def star_capture():
+    return cv2.VideoCapture("./Effect/effect_data/movie/star_03.mp4")
+
+def star_SE():
+    return "./Sound/Thunder/天候・雷08.mp3"
 
 def star_capture():
     return cv2.VideoCapture("./Effect/effect_data/movie/star_03.mp4")

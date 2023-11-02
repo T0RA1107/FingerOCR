@@ -2,12 +2,13 @@ import sys
 import cv2
 import numpy as np
 import copy
+sys.path.append("./Effect")
 from effect_base import EffectBase
 
 class Thunder(EffectBase):
     def __init__(self):
         self.type = "movie"
-        self.capture = cv2.VideoCapture("./Effect/effect_data/thunder_04.mp4")
+        self.capture = cv2.VideoCapture("./Effect/effect_data/movie/thunder_04.mp4")
         self.SE = "./Sound/Thunder/天候・雷08.mp3"
 
     def __call__(self, frame):
@@ -18,8 +19,7 @@ class Thunder(EffectBase):
         H, W, _ = frame.shape
         h, w, _ = image.shape
         if H < h or W < w:
-            rate = min(h / H, w / W)
-            image = cv2.resize(image, fx=rate, fy=rate)
+            image = cv2.resize(image, dsize=(W, H))
         mask = np.where(np.any(image > 50, axis=2))
         ret[:h, :w, :][mask[0], mask[1]] = image[mask[0], mask[1]]
         return True, ret
