@@ -19,26 +19,33 @@ class Canvas:
         blur_mask = cv2.medianBlur(hsv_mask,ksize=3)
         #ラベリング処理
         src = cv2.cvtColor(blur_mask,cv2.COLOR_GRAY2BGR)
+        new_point = np.zeros_like(src, dtype=np.uint8)
         nlabels, labels, stats, centroid = cv2.connectedComponentsWithStats(blur_mask)
-        #領域の処理
+        # 領域(stats[:, 4])が3つ以上ある場合(そのうち1つは背景)だけ処理
         if nlabels >= 3:
-            top_idx = stats[:,4].argsort()[-3:-1]
-            
+            # 面積でソート(今回は面積が上位２つの領域を利用)
+            top_idx = stats[:, 4].argsort()[-2:-1]
+
+            # 各領域において...
             for i in top_idx:
-                x0 = stats[i,0]
-                y0 = stats[i,1]
-                x1 = x0 + stats[i,2]
-                y1 = y0 + stats[i,3]
-                xx = (x1+x0)//2
-                yy = (y1+y0)//2
-                r = (x1-x0)//2
+
+                # 領域の外接矩形の角座標を入手
+                x0 = stats[i, 0]
+                y0 = stats[i, 1]
+                x1 = x0 + stats[i, 2]
+                y1 = y0 + stats[i, 3]
+                xx = (x1 + x0)//2
+                yy = (y1 + y0)//2
+                r = (x1 - x0)//2
                 
-                cv2.circle(src, center=(xx, yy), radius=2, color=(0, 0, 255), thickness=5)
+                cv2.circle(new_point, center=(xx, yy), radius=8, color=(0, 0, 255), thickness=-1)
             
-        self.canvas = src
+        self.canvas |= new_point
     
     def reset(self):
         self.canvas = np.zeros((self.h, self.w, 3), dtype=np.uint8)
     
-    def show(self):
-        cv2.imshow("canvas", self.canvas)
+    def show(self, frame):
+        mask = np.where(self.canvas[:, :, 2] == 255)
+        frame[mask[0], mask[1], :] = self.canvas[mask[0], mask[1]]
+        cv2.imshow("canvas", frame)

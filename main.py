@@ -36,7 +36,10 @@ def main():
             effect_controller.set_effect("thunder")
         elif k == ord('w'):
             canvas.write(frame)
-        canvas.show()
+        elif k== ord('c'):
+            canvas.reset()
+        canvas.show(frame)
+        
             
 if __name__ == "__main__":
     main()
