@@ -43,7 +43,7 @@ while True:
     # 領域(stats[:, 4])が3つ以上ある場合(そのうち1つは背景)だけ処理
     if nlabels >= 3:
         # 面積でソート(今回は面積が上位２つの領域を利用)
-        top_idx = stats[:, 4].argsort()[-3:-1]
+        top_idx = stats[:, 4].argsort()[-2:-1]
 
         # 各領域において...
         for i in top_idx:
@@ -57,36 +57,9 @@ while True:
             yy = (y1 + y0)//2
             r = (x1 - x0)//2
             
-            cv2.circle(src, center=(xx, yy), radius=r, color=(0, 0, 255), thickness=5)
+            cv2.circle(src, center=(xx, yy), radius=2, color=(0, 0, 255), thickness=5)
 
-            # 領域の重心座標、サイズを表示 (引数 : 描画画像、 書き込む文字列、 書き込む座標、 フォント、 サイズ、 色、 太さ)
-            cv2.putText(
-                src,
-                "Center X: " + str(int(centroids[i, 0])),
-                (x1 - 30, y1 + 15),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                (0, 255, 255),
-                2,
-            )
-            cv2.putText(
-                src,
-                "Center Y: " + str(int(centroids[i, 1])),
-                (x1 - 30, y1 + 30),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                (0, 255, 255),
-                2,
-            )
-            cv2.putText(
-                src,
-                "Size: " + str(int(stats[i, 4])),
-                (x1 - 30, y1 + 45),
-                cv2.FONT_HERSHEY_PLAIN,
-                1,
-                (0, 255, 255),
-                2,
-            )
+            
 
     # 結果画像の表示
     cv2.imshow("output", src)
