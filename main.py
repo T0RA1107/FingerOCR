@@ -30,16 +30,18 @@ def main():
             threading.Thread(target=playsound, args=("./Sound/Camera/Camera-Film03-1.mp3",)).start()
         elif k == ord('r'):
             effect_controller.reset()
-        elif k == ord('p'):
-            effect_controller.set_effect("pumpkin")
-        elif k == ord('t'):
-            effect_controller.set_effect("thunder")
         elif k == ord('w'):
             canvas.write(frame)
+        elif k == ord('i'):
+            text = effect_controller.recognize_finger_writing(canvas.canvas)
+            print(text)
+            if effect_controller.is_effect(text):
+                effect_controller.set_effect(text)
+            canvas.reset()
         elif k== ord('c'):
             canvas.reset()
         canvas.show(frame)
-        
-            
+
+
 if __name__ == "__main__":
     main()
