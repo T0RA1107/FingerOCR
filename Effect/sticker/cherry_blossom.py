@@ -14,7 +14,7 @@ class Cherry_blossom(EffectBase):
         cherry_blossom_image = cv2.imread("./Effect/effect_data/sticker/cherry_blossom.png")
         h, w, _ = cherry_blossom_image.shape
         mask = np.where(np.any(cherry_blossom_image > 0, axis=2))
-        ret[:h, :w, :][mask[0], mask[1]] = cherry_blossom_image[mask[0], mask[1]]
+        ret[:h, -w:, :][mask[0], mask[1]] = cherry_blossom_image[mask[0], mask[1]]
         return True, ret
 
 def cherry_blossom(frame):
@@ -22,7 +22,7 @@ def cherry_blossom(frame):
     cherry_blossom_image = cv2.imread("./Effect/effect_data/sticker/cherry_blossom.png")
     h, w, _ = cherry_blossom_image.shape
     mask = np.where(np.any(cherry_blossom_image > 0, axis=2))
-    ret[:h, :w, :][mask[0], mask[1]] = cherry_blossom_image[mask[0], mask[1]]
+    ret[:h, -w:, :][mask[0], mask[1]] = cherry_blossom_image[mask[0], mask[1]]
     return ret
 
 if __name__ == "__main__":
