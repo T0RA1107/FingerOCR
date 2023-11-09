@@ -14,8 +14,13 @@ class EffectController:
         self.Effect = None
         load = True
         if load:
-            self.processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
-            self.model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
+            threading.Thread(target=self.load, args=()).start()
+
+    def load(self):
+        print("start loading model")
+        self.processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
+        self.model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
+        print("model loaded!!!")
 
     def effect(self, frame):
         if self.Effect is None: return frame
