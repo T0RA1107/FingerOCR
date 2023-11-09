@@ -8,7 +8,7 @@ from effect_base import EffectBase
 class Smoke(EffectBase):
     def __init__(self):
         self.type = "movie"
-        self.capture = cv2.VideoCapture("./Effect/effect_data/smoke_06.mp4")
+        self.capture = cv2.VideoCapture("./Effect/effect_data/movie/smoke_06.mp4")
 
     def __call__(self, frame):
         ret, image = self.capture.read()

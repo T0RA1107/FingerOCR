@@ -2,12 +2,13 @@ import sys
 import cv2
 import numpy as np
 import copy
+sys.path.append("./Effect")
 from effect_base import EffectBase
 
 class Star(EffectBase):
     def __init__(self):
         self.type = "movie"
-        self.capture = cv2.VideoCapture("./Effect/effect_data/star_03.mp4")
+        self.capture = cv2.VideoCapture("./Effect/effect_data/movie/star_03.mp4")
         self.SE = "./Sound/Thunder/天候・雷08.mp3"
 
     def __call__(self, frame):
