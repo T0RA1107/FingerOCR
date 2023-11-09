@@ -36,9 +36,9 @@ if __name__ == "__main__":
         if not is_ok:
             break
         ret = copy.deepcopy(frame)
-        h, w, _ = fire_image.shape
-        mask = np.where(np.any(fire_image > 50, axis=2))
-        ret[:h, :w, :][mask[0], mask[1]] = fire_image[mask[0], mask[1]]
+        h, w, _ = fire_loop_image.shape
+        mask = np.where(np.any(fire_loop_image > 50, axis=2))
+        ret[:h, :w, :][mask[0], mask[1]] = fire_loop_image[mask[0], mask[1]]
         cv2.imshow("Effect", ret)
         k = cv2.waitKey(1)
         if k == ord("q"):

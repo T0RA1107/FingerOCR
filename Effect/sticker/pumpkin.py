@@ -23,6 +23,8 @@ def pumpkin(frame):
     h, w, _ = pumpkin_image.shape
     mask = np.where(np.any(pumpkin_image > 0, axis=2))
     ret[:h, :w, :][mask[0], mask[1]] = pumpkin_image[mask[0], mask[1]]
+    ret[2*h:3*h, w:2*w, :][mask[0], mask[1]] = pumpkin_image[mask[0], mask[1]]
+    ret[h:2*h, 3*w:4*w, :][mask[0], mask[1]] = pumpkin_image[mask[0], mask[1]]
     return ret
 
 if __name__ == "__main__":
