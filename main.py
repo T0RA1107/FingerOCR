@@ -11,7 +11,7 @@ from canvas import Canvas
 save_dir = "./test_image"
 
 def main():
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
     effect_controller = EffectController()
     H = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     W = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -37,7 +37,7 @@ def main():
             st = time.time()
             text = effect_controller.recognize_finger_writing(canvas.canvas)
             inf_t = time.time() - st
-            print("inference time: {:.f2}".format(inf_t))
+            print("inference time: {:.2}".format(inf_t))
             print("Predict:", text)
             if effect_controller.is_effect(text):
                 effect_controller.set_effect(text)
