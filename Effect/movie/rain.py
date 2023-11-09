@@ -9,7 +9,7 @@ class Rain(EffectBase):
     def __init__(self):
         self.type = "movie"
         self.capture = cv2.VideoCapture("./Effect/effect_data/movie/rain_01.mp4")
-        
+        self.SE = "./Sound/rain/雨・傘の下（激しい）.mp3"
 
     def __call__(self, frame):
         ret, image = self.capture.read()
@@ -27,7 +27,8 @@ class Rain(EffectBase):
 def rain_capture():
     return cv2.VideoCapture("./Effect/effect_data/movie/rain_01.mp4")
 
-
+def thunder_SE():
+    return "./Sound/rain/雨・傘の下（激しい）.mp3"
 
 if __name__ == "__main__":
     img_path = sys.argv[1]

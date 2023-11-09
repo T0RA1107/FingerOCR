@@ -16,8 +16,10 @@ name2effect = {
     "sakura": Cherryblossom,
     "fire": Fire,
     "hanabi": Firework,
-    "niji": Rainbow,
+    "rainbow": Rainbow,
+    "nizi": Rainbow,
     "snow": Snow,
+    "chopper": Chopper,
 
     "thunder": Thunder,
     "fire": Fire,

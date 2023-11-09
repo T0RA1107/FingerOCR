@@ -8,8 +8,8 @@ from effect_base import EffectBase
 class Fire(EffectBase):
     def __init__(self):
         self.type = "movie"
-        self.capture = cv2.VideoCapture("./Effect/effect_data/fire_loop_04.mp4")
-        self.SE = "./Sound/Thunder/天候・雷08.mp3"
+        self.capture = cv2.VideoCapture("./Effect/effect_data/movie/fire_loop_04.mp4")
+        self.SE = "./Sound/Fire/災害・火災.mp3"
 
     def __call__(self, frame):
         ret, image = self.capture.read()
@@ -26,6 +26,9 @@ class Fire(EffectBase):
 
 def fire_capture():
     return cv2.VideoCapture("./Effect/effect_data/movie/fire_loop_04.mp4")
+
+def thunder_SE():
+    return "./Sound/Thunder/災害・火災.mp3"
 
 if __name__ == "__main__":
     img_path = sys.argv[1]
